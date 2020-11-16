@@ -4,12 +4,24 @@ const { connect } = require("./lib/database");
 const { getPassword, deletePasswordByName } = require("./lib/passwords");
 
 const app = express();
+app.use(express.json());
 const port = 3600;
 
 app.get("/api/passwords/:name", async (request, response) => {
   const { name } = request.params;
-  const passwordValue = await getPassword(name);
-  response.send(`Your password is ${passwordValue}`);
+  try {
+    const passwordValue = await getPassword(name);
+    if (!passwordValue) {
+      response
+        .status(404)
+        .send("Could not find the password you have specified");
+      return;
+    }
+    response.send(`Your password is ${passwordValue}`);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send("An internal server error occured");
+  }
 });
 
 app.post("/api/passwords", (request, response) => {
