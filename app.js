@@ -3,6 +3,7 @@ const {
   setPassword,
   getPassword,
   deletePasswordByName,
+  updatePasswordByName,
 } = require("./lib/passwords");
 const {
   askForMasterPassword,
@@ -10,6 +11,7 @@ const {
   newPassword,
   readPassword,
   passwordToDelete,
+  passwordToUpdate,
 } = require("./lib/questions");
 const { isMasterPasswordCorrect } = require("./lib/validation");
 const { connect, close } = require("./lib/database");
@@ -48,7 +50,12 @@ async function run() {
   }
 
   if (nextToDo === "update") {
-    console.log("work in progress");
+    const [
+      updatePasswordName,
+      updateNewPasswordValue,
+    ] = await passwordToUpdate();
+    await updatePasswordByName(updatePasswordName, updateNewPasswordValue);
+    console.log(`Your password ${updatePasswordName} is updated`);
   }
 
   // masterpassword in dotenv
