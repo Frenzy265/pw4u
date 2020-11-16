@@ -14,7 +14,7 @@ const {
   passwordToUpdate,
 } = require("./lib/questions");
 const { isMasterPasswordCorrect } = require("./lib/validation");
-const { connect, close } = require("./lib/database");
+const { connect, close, collection } = require("./lib/database");
 
 async function run() {
   console.log("Connection to database...");
@@ -22,6 +22,10 @@ async function run() {
   console.log("Connectet to database!");
 
   const masterPassword = await askForMasterPassword();
+
+  const findCursor = await collection("passwords").find({});
+  const numberOfPasswords = await findCursor.count();
+  console.log(`You have ${numberOfPasswords} passwords in your Safe`);
 
   if (!(await isMasterPasswordCorrect(masterPassword))) {
     console.error("You are not welcome here! 👿 Try again!");
@@ -59,6 +63,7 @@ async function run() {
   }
 
   // masterpassword in dotenv
+  // encrypt update password value
 
   await close();
 }
