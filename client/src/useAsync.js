@@ -5,11 +5,11 @@ const useAsync = (action) => {
   const [loading, setLoading] = useState(false);
   const [error, seterror] = useState(null);
 
-  const doFetch = async () => {
+  const doFetch = async (props) => {
     try {
       setLoading(true);
       seterror(null);
-      const newData = await action();
+      const newData = await action(props);
       setDate(newData);
     } catch (error) {
       console.error(error);

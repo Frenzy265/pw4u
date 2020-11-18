@@ -1,28 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { getPassword } from "./api/passwords";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import Search from "./components/PasswordSearch";
+import useAsync from "./../src/useAsync";
 
 function App() {
-  const [password, setPassword] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const doFetch = async () => {
-      try {
-        setLoading(true);
-        const newPassword = await getPassword("lala");
-        setPassword(newPassword);
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    doFetch();
-  }, []);
+  const { data, loading, error, doFetch } = useAsync(getPassword);
 
   return (
     <div className="App">
@@ -30,7 +14,8 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         {loading && <div>Loading...</div>}
         {error && <div>{error.message}</div>}
-        {password}
+        <Search onSearch={(passwordName) => doFetch(passwordName)} />
+        {data}
       </header>
     </div>
   );
