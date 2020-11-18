@@ -6,13 +6,20 @@ import { useEffect, useState } from "react";
 function App() {
   const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const doFetch = async () => {
-      setLoading(true);
-      const newPassword = await getPassword("pin");
-      setPassword(newPassword);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const newPassword = await getPassword("lala");
+        setPassword(newPassword);
+      } catch (error) {
+        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
     doFetch();
   }, []);
@@ -22,6 +29,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {loading && <div>Loading...</div>}
+        {error && <div>{error.message}</div>}
         {password}
       </header>
     </div>
