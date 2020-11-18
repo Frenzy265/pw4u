@@ -5,10 +5,14 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [password, setPassword] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const doFetch = async () => {
-      const newPassword = await getPassword("mail");
+      setLoading(true);
+      const newPassword = await getPassword("pin");
       setPassword(newPassword);
+      setLoading(false);
     };
     doFetch();
   }, []);
@@ -17,6 +21,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        {loading && <div>Loading...</div>}
         {password}
       </header>
     </div>
