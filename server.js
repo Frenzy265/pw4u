@@ -9,7 +9,7 @@ const {
 
 const app = express();
 app.use(express.json());
-const port = 3600;
+const port = process.env.PORT || 3600;
 
 app.get("/api/passwords/:name", async (request, response) => {
   const { name } = request.params;
