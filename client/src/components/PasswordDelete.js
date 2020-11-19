@@ -12,7 +12,7 @@ const Input = styled.input`
   text-align: center;
 `;
 
-export default function PasswordSearch({ onSearch }) {
+export default function PasswordDelete({ onSearch }) {
   const [passwordName, setPasswordName] = useState("");
 
   function handlePasswordName(event) {
@@ -28,7 +28,7 @@ export default function PasswordSearch({ onSearch }) {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Search for password:
+        Delete password:
         <Input
           type="text"
           placeholder="Enter password name"
@@ -37,7 +37,7 @@ export default function PasswordSearch({ onSearch }) {
           required
         />
       </label>
-      <button type="submit">Search</button>
+      <button type="submit">Delete</button>
     </form>
   );
 }
