@@ -2,8 +2,9 @@ import React from "react";
 import PasswordDelete from "./PasswordDelete";
 
 export default {
-  title: "PW Manager",
-  component: PasswordDelete({ onSearch: "pin" }),
+  title: "PW-Manager/Inputfield",
+  parameters: { layout: "centered" },
+  component: PasswordDelete,
 };
 
-const deletePassword = () => <PasswordDelete />;
+export const deletePassword = () => <PasswordDelete />;

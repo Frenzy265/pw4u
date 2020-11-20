@@ -20,6 +20,8 @@ function App() {
         {error && <div>{error.message}</div>}
         <PasswordSearch onSearch={(passwordName) => doFetch(passwordName)} />
         {data}
+        {loading2 && <div>Loading...</div>}
+        {error2 && <div>{error.message}</div>}
         <PasswordDelete onSearch={(passwordName) => doFetch2(passwordName)} />
         {data2}
       </header>
