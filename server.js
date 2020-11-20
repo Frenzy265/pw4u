@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const { connect } = require("./lib/database");
 const {
   getPassword,
@@ -9,6 +10,7 @@ const {
 
 const app = express();
 app.use(express.json());
+
 const port = process.env.PORT || 3600;
 
 app.get("/api/passwords/:name", async (request, response) => {
@@ -51,6 +53,17 @@ app.delete("/api/passwords/:name", async (request, response) => {
     console.error(error);
     response.status(500).send("Unexpected error");
   }
+});
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+app.use(
+  "/storybook",
+  express.static(path.join(__dirname, "client/storybook-static"))
+);
+
+app.get("*", (request, response) => {
+  response.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 async function run() {
