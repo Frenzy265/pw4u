@@ -5,5 +5,9 @@ export const getPassword = async (passwordName) => {
 };
 
 export const deletePassword = async (passwordName) => {
-  await fetch(`/api/passwords/${passwordName}`, { method: "DELETE" });
+  const response = await fetch(`/api/passwords/${passwordName}`, {
+    method: "DELETE",
+  });
+  const answer = await response.text();
+  return answer;
 };
