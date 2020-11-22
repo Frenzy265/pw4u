@@ -7,7 +7,7 @@ import PasswordDelete from "./../src/components/PasswordDelete";
 function App() {
   const { data, loading, error, doFetch } = useAsync(getPassword);
   const {
-    data: data2,
+    data: deletedName,
     loading: loading2,
     error: error2,
     doFetch: doFetch2,
@@ -20,8 +20,10 @@ function App() {
         {error && <div>{error.message}</div>}
         <PasswordSearch onSearch={(passwordName) => doFetch(passwordName)} />
         {data}
+        {loading2 && <div>Loading...</div>}
+        {error2 && <div>{error2.message}</div>}
         <PasswordDelete onSearch={(passwordName) => doFetch2(passwordName)} />
-        {data2}
+        {deletedName}
       </header>
     </div>
   );
